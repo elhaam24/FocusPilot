@@ -1,6 +1,6 @@
 # FocusPilot 🚀
 
-<img width="1362" height="681" alt="{6839ED17-C68D-437D-8591-C1CBBC6680EB}" src="https://github.com/user-attachments/assets/c444789d-a07e-4bc5-83d1-7f9caf6139a2" />
+
 
 
 
