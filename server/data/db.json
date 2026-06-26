@@ -114,6 +114,26 @@
         "comprehension": 1
       },
       "createdAt": "2026-06-26T08:39:44.873Z"
+    },
+    "ffe37671-36a4-4f74-9612-02e0fbe9aa27": {
+      "id": "ffe37671-36a4-4f74-9612-02e0fbe9aa27",
+      "name": "kiki",
+      "age": 11,
+      "interests": [
+        "space",
+        "ocean"
+      ],
+      "avatar": "dino",
+      "currentWorld": "Cosmic Canopy",
+      "stars": 0,
+      "skillLevels": {
+        "memory": 1,
+        "patterns": 1,
+        "patience": 1,
+        "observation": 1,
+        "comprehension": 1
+      },
+      "createdAt": "2026-06-26T14:16:09.497Z"
     }
   },
   "sessions": [
@@ -392,6 +412,14 @@
       "id": "ef8e22aa-bd4a-42fc-a4a4-493d4691efb8",
       "profileId": "f39d716c-0f95-47a5-aba3-be07ca9c2cce",
       "startTime": "2026-06-26T08:44:16.358Z",
+      "endTime": null,
+      "duration": 0,
+      "active": true
+    },
+    {
+      "id": "5c02614d-e530-4a55-ace9-6cb01402b2ab",
+      "profileId": "ffe37671-36a4-4f74-9612-02e0fbe9aa27",
+      "startTime": "2026-06-26T14:17:22.035Z",
       "endTime": null,
       "duration": 0,
       "active": true
