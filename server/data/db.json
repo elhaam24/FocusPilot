@@ -86,7 +86,7 @@
       ],
       "avatar": "dragon",
       "currentWorld": "Cosmic Canopy",
-      "stars": 0,
+      "stars": 35,
       "skillLevels": {
         "memory": 1,
         "patterns": 1,
@@ -125,7 +125,7 @@
       ],
       "avatar": "dino",
       "currentWorld": "Cosmic Canopy",
-      "stars": 0,
+      "stars": 37,
       "skillLevels": {
         "memory": 1,
         "patterns": 1,
@@ -423,6 +423,78 @@
       "endTime": null,
       "duration": 0,
       "active": true
+    },
+    {
+      "id": "7715e20a-e5e9-4146-aee8-5207dfe0fdd7",
+      "profileId": "ffe37671-36a4-4f74-9612-02e0fbe9aa27",
+      "startTime": "2026-06-26T14:43:18.074Z",
+      "endTime": "2026-06-26T14:43:59.863Z",
+      "duration": 29,
+      "active": false
+    },
+    {
+      "id": "08d5870d-8bb0-410b-b1ba-e9998ed1ba20",
+      "profileId": "ffe37671-36a4-4f74-9612-02e0fbe9aa27",
+      "startTime": "2026-06-26T14:44:10.142Z",
+      "endTime": null,
+      "duration": 0,
+      "active": true
+    },
+    {
+      "id": "df1d358c-893f-4dc1-9d1e-49cb7b55f03c",
+      "profileId": "ffe37671-36a4-4f74-9612-02e0fbe9aa27",
+      "startTime": "2026-06-26T14:44:40.875Z",
+      "endTime": "2026-06-26T14:44:57.257Z",
+      "duration": 10,
+      "active": false
+    },
+    {
+      "id": "42741fbb-42be-4916-beb4-f652db4d6fc7",
+      "profileId": "ffe37671-36a4-4f74-9612-02e0fbe9aa27",
+      "startTime": "2026-06-26T14:45:59.129Z",
+      "endTime": null,
+      "duration": 0,
+      "active": true
+    },
+    {
+      "id": "63b272aa-11d0-4dea-b4d5-6e983e7abdeb",
+      "profileId": "7ea49c85-2288-414d-b4f9-69b789a8f6f5",
+      "startTime": "2026-06-26T14:51:15.489Z",
+      "endTime": null,
+      "duration": 0,
+      "active": true
+    },
+    {
+      "id": "b541549c-2a8a-47ea-8693-b60bc1bbf15c",
+      "profileId": "7ea49c85-2288-414d-b4f9-69b789a8f6f5",
+      "startTime": "2026-06-26T14:52:51.655Z",
+      "endTime": null,
+      "duration": 0,
+      "active": true
+    },
+    {
+      "id": "c223119a-6953-45e7-80e9-0d42437162a5",
+      "profileId": "7ea49c85-2288-414d-b4f9-69b789a8f6f5",
+      "startTime": "2026-06-26T14:55:19.664Z",
+      "endTime": null,
+      "duration": 0,
+      "active": true
+    },
+    {
+      "id": "b94a947c-c8ff-4c48-8532-0fbd0901382d",
+      "profileId": "7ea49c85-2288-414d-b4f9-69b789a8f6f5",
+      "startTime": "2026-06-26T14:56:09.001Z",
+      "endTime": null,
+      "duration": 0,
+      "active": true
+    },
+    {
+      "id": "edd98b06-f7bf-44ed-ba6e-7a555cca3fef",
+      "profileId": "7ea49c85-2288-414d-b4f9-69b789a8f6f5",
+      "startTime": "2026-06-26T14:57:25.375Z",
+      "endTime": null,
+      "duration": 0,
+      "active": true
     }
   ],
   "gamelogs": [
@@ -594,6 +666,76 @@
       "isCorrect": true,
       "duration": 82,
       "timestamp": "2026-06-26T08:42:36.566Z",
+      "starsEarned": 15
+    },
+    {
+      "id": "791e982a-abd0-4cf4-84fe-4089b48204e7",
+      "profileId": "ffe37671-36a4-4f74-9612-02e0fbe9aa27",
+      "gameType": "comprehension",
+      "difficulty": 1,
+      "isCorrect": true,
+      "duration": 29,
+      "timestamp": "2026-06-26T14:43:59.063Z",
+      "starsEarned": 15
+    },
+    {
+      "id": "df4308b6-f29f-49ea-8e77-b34e5e73e10f",
+      "profileId": "ffe37671-36a4-4f74-9612-02e0fbe9aa27",
+      "gameType": "observation",
+      "difficulty": 1,
+      "isCorrect": false,
+      "duration": 8,
+      "timestamp": "2026-06-26T14:44:27.624Z",
+      "starsEarned": 5
+    },
+    {
+      "id": "de066f07-83c5-4d65-8808-d02669c00b70",
+      "profileId": "ffe37671-36a4-4f74-9612-02e0fbe9aa27",
+      "gameType": "patterns",
+      "difficulty": 1,
+      "isCorrect": true,
+      "duration": 37,
+      "timestamp": "2026-06-26T14:45:46.775Z",
+      "starsEarned": 15
+    },
+    {
+      "id": "c555bcf9-fd6c-47c9-ba2e-601e6445fc8b",
+      "profileId": "ffe37671-36a4-4f74-9612-02e0fbe9aa27",
+      "gameType": "memory",
+      "difficulty": 1,
+      "isCorrect": false,
+      "duration": 46,
+      "timestamp": "2026-06-26T14:46:52.276Z",
+      "starsEarned": 2
+    },
+    {
+      "id": "5d1a884a-2e74-4785-8358-7794849fc76b",
+      "profileId": "7ea49c85-2288-414d-b4f9-69b789a8f6f5",
+      "gameType": "comprehension",
+      "difficulty": 1,
+      "isCorrect": true,
+      "duration": 39,
+      "timestamp": "2026-06-26T14:53:38.228Z",
+      "starsEarned": 15
+    },
+    {
+      "id": "f8128efb-b7e0-4c38-88bc-561724d9dbb2",
+      "profileId": "7ea49c85-2288-414d-b4f9-69b789a8f6f5",
+      "gameType": "observation",
+      "difficulty": 1,
+      "isCorrect": false,
+      "duration": 21,
+      "timestamp": "2026-06-26T14:56:42.865Z",
+      "starsEarned": 5
+    },
+    {
+      "id": "7993d96a-8e32-410a-9308-cf510a04d8d4",
+      "profileId": "7ea49c85-2288-414d-b4f9-69b789a8f6f5",
+      "gameType": "patterns",
+      "difficulty": 1,
+      "isCorrect": true,
+      "duration": 42,
+      "timestamp": "2026-06-26T14:58:15.940Z",
       "starsEarned": 15
     }
   ]

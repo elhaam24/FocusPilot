@@ -57,18 +57,6 @@ export default function Navbar({ activeProfile, activePage, setActivePage, handl
             📊 Parent Hub
           </button>
 
-          <button
-            onClick={() => setActivePage('ai-insights')}
-            className="btn-flat"
-            style={{
-              background: activePage === 'ai-insights' ? 'rgba(255, 255, 255, 0.08)' : 'transparent',
-              borderColor: activePage === 'ai-insights' ? 'var(--color-aurora)' : 'transparent',
-              color: activePage === 'ai-insights' ? 'var(--color-aurora)' : 'var(--text-muted)'
-            }}
-          >
-            🧭 AI Insights
-          </button>
-
           {/* Profile Status */}
           <div style={{ 
             display: 'flex', 
