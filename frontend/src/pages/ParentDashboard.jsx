@@ -1,0 +1,338 @@
+import React, { useState, useEffect } from 'react';
+
+export default function ParentDashboard({ activeProfile }) {
+  const [isLoading, setIsLoading] = useState(true);
+  const [stats, setStats] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetchStats();
+  }, [activeProfile]);
+
+  const fetchStats = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await fetch(`/api/parent/stats/${activeProfile.id}`);
+      const data = await response.json();
+      if (response.ok) {
+        setStats(data);
+      } else {
+        setError(data.error || 'Failed to compile statistics.');
+      }
+    } catch (err) {
+      console.error('Error loading stats:', err);
+      setError('Network error. Failed to connect to statistics server.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Render loading state
+  if (isLoading) {
+    return (
+      <div className="glass-card" style={{ textAlign: 'center', padding: '60px 20px', maxWidth: '500px', margin: '40px auto' }}>
+        <span style={{ fontSize: '3rem' }} className="floating-element">📊</span>
+        <h2 style={{ fontSize: '1.5rem', marginTop: '20px', fontFamily: 'Outfit' }} className="gradient-text-aurora">
+          Compiling Focus Metrics...
+        </h2>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginTop: '8px' }}>
+          Nova is aggregating focus logs and generating developmental analysis.
+        </p>
+      </div>
+    );
+  }
+
+  // Render error state
+  if (error || !stats) {
+    return (
+      <div className="glass-card" style={{ textAlign: 'center', padding: '40px 20px', maxWidth: '500px', margin: '40px auto' }}>
+        <span style={{ fontSize: '3rem' }}>⚠️</span>
+        <h2 style={{ fontSize: '1.5rem', marginTop: '16px', color: 'var(--color-coral)', fontFamily: 'Outfit' }}>
+          Failed to Load Dashboard
+        </h2>
+        <p style={{ color: 'var(--text-muted)', marginTop: '8px', fontSize: '0.9rem' }}>
+          {error || 'An unexpected error occurred.'}
+        </p>
+        <button onClick={fetchStats} className="btn-primary" style={{ marginTop: '24px' }}>Retry</button>
+      </div>
+    );
+  }
+
+  const { summary, dailyFocusChart, cognitiveSkills, aiReport } = stats;
+
+  // Custom SVG Chart Dimensions
+  const chartHeight = 150;
+  const chartWidth = 500;
+  const padding = 30;
+  const maxVal = Math.max(...dailyFocusChart.map(d => d.focusMinutes), 10); // Ensure at least 10 scale height
+
+  return (
+    <div>
+      {/* Dashboard Header */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px', flexWrap: 'wrap', gap: '16px' }}>
+        <div>
+          <h1 style={{ fontSize: '2.2rem', marginBottom: '4px' }} className="gradient-text-aurora">
+            Parent & Educator Dashboard
+          </h1>
+          <p style={{ color: 'var(--text-muted)' }}>
+            Real-time cognitive progress and focus analysis for <strong>{activeProfile.name}</strong>.
+          </p>
+        </div>
+        <button onClick={fetchStats} className="btn-secondary" style={{ padding: '8px 16px', fontSize: '0.85rem' }}>
+          🔄 Refresh Metrics
+        </button>
+      </div>
+
+      {/* Summary KPI Cards */}
+      <div className="stats-summary-grid">
+        <div className="glass-card stat-card" style={{ padding: '16px' }}>
+          <span style={{ fontSize: '1.5rem' }}>⏱️</span>
+          <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '4px' }}>Total Focus Time</div>
+          <div className="stat-val">{summary.totalFocusMinutes}m</div>
+        </div>
+        
+        <div className="glass-card stat-card" style={{ padding: '16px' }}>
+          <span style={{ fontSize: '1.5rem' }}>🔥</span>
+          <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '4px' }}>Active Streak</div>
+          <div className="stat-val" style={{ color: 'var(--color-solar)' }}>{summary.currentStreak} Days</div>
+        </div>
+
+        <div className="glass-card stat-card" style={{ padding: '16px' }}>
+          <span style={{ fontSize: '1.5rem' }}>👑</span>
+          <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '4px' }}>Best Streak</div>
+          <div className="stat-val" style={{ color: 'var(--color-nebula)' }}>{summary.longestStreak} Days</div>
+        </div>
+
+        <div className="glass-card stat-card" style={{ padding: '16px' }}>
+          <span style={{ fontSize: '1.5rem' }}>⭐</span>
+          <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '4px' }}>Total Stars</div>
+          <div className="stat-val" style={{ color: 'var(--color-solar)' }}>{summary.totalStars}</div>
+        </div>
+      </div>
+
+      {/* Main Dashboard Layout Grid */}
+      <div className="dashboard-grid">
+        {/* LEFT COLUMN: Charts & Cognitive Skills */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          
+          {/* Daily Focus Chart */}
+          <div className="glass-card">
+            <h3 style={{ fontSize: '1.2rem', fontFamily: 'Outfit', color: 'var(--text-main)', marginBottom: '4px' }}>
+              Focus Time Trend (Last 7 Days)
+            </h3>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
+              Tracks total minutes spent focusing on reading, patience, and memory challenges.
+            </p>
+
+            {/* Responsive SVG Bar Chart */}
+            <div style={{ width: '100%', overflowX: 'auto', marginTop: '16px' }}>
+              <svg 
+                viewBox={`0 0 ${chartWidth} ${chartHeight}`} 
+                style={{ width: '100%', minWidth: '400px', height: '100%', display: 'block' }}
+              >
+                {/* Horizontal grid lines */}
+                {[0, 0.5, 1].map((ratio, idx) => {
+                  const y = padding + ratio * (chartHeight - 2 * padding);
+                  return (
+                    <line
+                      key={idx}
+                      x1={padding}
+                      y1={y}
+                      x2={chartWidth - padding}
+                      y2={y}
+                      stroke="var(--glass-border)"
+                      strokeWidth="1"
+                      strokeDasharray="4 4"
+                    />
+                  );
+                })}
+
+                {/* Bars */}
+                {dailyFocusChart.map((day, idx) => {
+                  const numDays = dailyFocusChart.length;
+                  const barWidth = 32;
+                  const spacing = (chartWidth - 2 * padding) / numDays;
+                  const x = padding + idx * spacing + (spacing - barWidth) / 2;
+                  
+                  // Calculate height proportionally
+                  const valRatio = day.focusMinutes / maxVal;
+                  const barHeight = Math.max(4, valRatio * (chartHeight - 2 * padding));
+                  const y = chartHeight - padding - barHeight;
+
+                  return (
+                    <g key={day.date}>
+                      {/* Bar Background Glow */}
+                      <rect
+                        x={x}
+                        y={y}
+                        width={barWidth}
+                        height={barHeight}
+                        fill="url(#barGradient)"
+                        rx="4"
+                        style={{ filter: 'drop-shadow(0px 0px 4px var(--color-aurora-glow))' }}
+                      />
+                      
+                      {/* Text value above bar */}
+                      {day.focusMinutes > 0 && (
+                        <text
+                          x={x + barWidth / 2}
+                          y={y - 6}
+                          fill="var(--color-aurora)"
+                          fontSize="9"
+                          fontWeight="700"
+                          textAnchor="middle"
+                        >
+                          {day.focusMinutes}m
+                        </text>
+                      )}
+
+                      {/* X Axis Label */}
+                      <text
+                        x={x + barWidth / 2}
+                        y={chartHeight - 10}
+                        fill="var(--text-muted)"
+                        fontSize="9"
+                        fontWeight="600"
+                        textAnchor="middle"
+                      >
+                        {day.label}
+                      </text>
+                    </g>
+                  );
+                })}
+
+                {/* Defs for gradients */}
+                <defs>
+                  <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="var(--color-aurora)" />
+                    <stop offset="100%" stopColor="var(--color-nebula)" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+          </div>
+
+          {/* Cognitive Breakdown */}
+          <div className="glass-card">
+            <h3 style={{ fontSize: '1.2rem', fontFamily: 'Outfit', color: 'var(--text-main)', marginBottom: '4px' }}>
+              Cognitive Skill Breakdown
+            </h3>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '24px' }}>
+              Shows current skill level thresholds and accuracy rates in each focus category.
+            </p>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              {cognitiveSkills.map(skill => (
+                <div key={skill.key} style={{ display: 'grid', gridTemplateColumns: '120px 1fr 60px', alignItems: 'center', gap: '16px' }}>
+                  {/* Skill Name */}
+                  <div style={{ fontWeight: 700, fontSize: '0.95rem' }}>
+                    {skill.name}
+                  </div>
+                  
+                  {/* Progress Bar and Details */}
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '4px' }}>
+                      <span>Difficulty Level {skill.level}/5</span>
+                      <span>{skill.gamesPlayed} games played</span>
+                    </div>
+                    <div className="progress-bar-container" style={{ margin: 0 }}>
+                      <div 
+                        className="progress-bar-fill" 
+                        style={{ 
+                          width: `${skill.accuracy}%`,
+                          background: skill.key === 'patience' 
+                            ? 'var(--color-aurora)' 
+                            : (skill.key === 'comprehension' ? 'var(--color-solar)' : 'var(--color-nebula)')
+                        }}
+                      ></div>
+                    </div>
+                  </div>
+
+                  {/* Accuracy readout */}
+                  <div style={{ textAlign: 'right', fontWeight: 800, fontSize: '1.05rem', color: 'var(--text-main)' }}>
+                    {skill.accuracy}% <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)', display: 'block' }}>Accuracy</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* RIGHT COLUMN: AI Suggestions (Nova's Report) */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          <div className="glass-card glass-card-glowing-nebula" style={{ border: '1.5px solid var(--color-nebula)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
+              <span style={{ fontSize: '1.6rem' }}>⭐</span>
+              <h3 style={{ fontSize: '1.25rem', fontFamily: 'Outfit', color: 'var(--color-nebula)', margin: 0 }}>
+                Nova's Cognitive Report
+              </h3>
+            </div>
+
+            {/* AI Executive Summary */}
+            <p style={{ 
+              fontSize: '0.95rem', 
+              lineHeight: '1.6', 
+              color: 'var(--text-main)',
+              background: 'rgba(255, 255, 255, 0.03)',
+              padding: '16px',
+              borderRadius: 'var(--border-radius-sm)',
+              border: '1px solid var(--glass-border)',
+              marginBottom: '24px',
+              fontStyle: 'italic'
+            }}>
+              "{aiReport.executiveSummary}"
+            </p>
+
+            {/* Strengths */}
+            <div style={{ marginBottom: '20px' }}>
+              <h4 style={{ fontSize: '0.9rem', color: 'var(--color-aurora)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '8px', fontWeight: 700 }}>
+                ✓ Cognitive Strengths
+              </h4>
+              <ul style={{ paddingLeft: '18px', fontSize: '0.9rem', color: 'var(--text-main)', display: 'flex', flexDirection: 'column', gap: '6px', lineHeight: '1.4' }}>
+                {aiReport.cognitiveStrengths.map((str, idx) => (
+                  <li key={idx}>{str}</li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Areas for Improvement */}
+            <div style={{ marginBottom: '28px' }}>
+              <h4 style={{ fontSize: '0.9rem', color: 'var(--color-solar)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '8px', fontWeight: 700 }}>
+                ⚡ Focus Opportunities
+              </h4>
+              <ul style={{ paddingLeft: '18px', fontSize: '0.9rem', color: 'var(--text-main)', display: 'flex', flexDirection: 'column', gap: '6px', lineHeight: '1.4' }}>
+                {aiReport.areasForImprovement.map((area, idx) => (
+                  <li key={idx}>{area}</li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Screen-free Suggested Activities */}
+            <div>
+              <h4 style={{ fontSize: '0.9rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '12px', fontWeight: 700, borderTop: '1px solid var(--glass-border)', paddingTop: '16px' }}>
+                🧩 Suggested Home Activities
+              </h4>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                {aiReport.suggestedActivities.map((act, idx) => (
+                  <div key={idx} className="ai-suggestion-item" style={{ borderColor: idx % 2 === 0 ? 'var(--color-solar)' : 'var(--color-aurora)' }}>
+                    <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text-main)' }}>
+                      {act.title}
+                    </div>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', margin: '2px 0 6px 0' }}>
+                      Skill: {act.targetSkill}
+                    </div>
+                    <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: '1.4' }}>
+                      {act.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

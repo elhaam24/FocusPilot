@@ -1,0 +1,141 @@
+{
+  "profiles": {
+    "44211a43-ee82-4e1e-b8d8-90c77c9e28dc": {
+      "id": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "name": "Elie",
+      "age": 11,
+      "interests": [
+        "dinosaurs"
+      ],
+      "avatar": "koala",
+      "currentWorld": "Cosmic Canopy",
+      "stars": 44,
+      "skillLevels": {
+        "memory": 1,
+        "patterns": 1,
+        "patience": 1,
+        "observation": 1,
+        "comprehension": 1
+      },
+      "createdAt": "2026-06-23T17:44:19.811Z"
+    }
+  },
+  "sessions": [
+    {
+      "id": "98231edb-6d48-49ec-926b-b3b99a1a6f91",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "startTime": "2026-06-23T17:47:28.308Z",
+      "endTime": "2026-06-23T17:49:06.252Z",
+      "duration": 98,
+      "active": false
+    },
+    {
+      "id": "b162e117-12b4-4409-a9da-90d0faf155b3",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "startTime": "2026-06-23T17:50:37.812Z",
+      "endTime": null,
+      "duration": 0,
+      "active": true
+    },
+    {
+      "id": "dafc9ced-d7d9-4aed-974e-6575a5e2247f",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "startTime": "2026-06-23T18:16:03.481Z",
+      "endTime": "2026-06-23T18:20:02.506Z",
+      "duration": 223,
+      "active": false
+    },
+    {
+      "id": "b28c1da8-9156-4029-90de-dfc8a7d4769b",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "startTime": "2026-06-23T18:25:30.376Z",
+      "endTime": null,
+      "duration": 0,
+      "active": true
+    },
+    {
+      "id": "4daa6333-663b-49d6-8ef1-3fe5eff2774e",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "startTime": "2026-06-23T18:25:40.673Z",
+      "endTime": "2026-06-23T18:26:53.872Z",
+      "duration": 65,
+      "active": false
+    },
+    {
+      "id": "fd80a49f-bf55-4ee6-89eb-e94ec74aea08",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "startTime": "2026-06-23T18:27:41.635Z",
+      "endTime": "2026-06-23T18:28:30.745Z",
+      "duration": 43,
+      "active": false
+    },
+    {
+      "id": "227b782b-3c16-45ee-a603-354acb10b479",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "startTime": "2026-06-23T18:29:28.188Z",
+      "endTime": "2026-06-23T18:30:50.458Z",
+      "duration": 73,
+      "active": false
+    },
+    {
+      "id": "735362ab-be22-4878-b94c-15c61dec9d95",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "startTime": "2026-06-23T18:31:07.402Z",
+      "endTime": "2026-06-23T18:31:50.172Z",
+      "duration": 37,
+      "active": false
+    }
+  ],
+  "gamelogs": [
+    {
+      "id": "c18e946e-2f78-4828-bdff-69e0f11cb122",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "gameType": "comprehension",
+      "difficulty": 1,
+      "isCorrect": true,
+      "duration": 223,
+      "timestamp": "2026-06-23T18:20:02.036Z",
+      "starsEarned": 15
+    },
+    {
+      "id": "e35a7737-3b51-48ba-8695-d129bc18c4df",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "gameType": "observation",
+      "difficulty": 1,
+      "isCorrect": false,
+      "duration": 65,
+      "timestamp": "2026-06-23T18:26:53.508Z",
+      "starsEarned": 5
+    },
+    {
+      "id": "00c73b74-397d-42a0-9ad3-7b83f71debed",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "gameType": "patience",
+      "difficulty": 1,
+      "isCorrect": true,
+      "duration": 43,
+      "timestamp": "2026-06-23T18:28:30.450Z",
+      "starsEarned": 20
+    },
+    {
+      "id": "24420fd1-15ca-44cf-9ede-ab5e86f02946",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "gameType": "patterns",
+      "difficulty": 1,
+      "isCorrect": false,
+      "duration": 73,
+      "timestamp": "2026-06-23T18:30:50.383Z",
+      "starsEarned": 2
+    },
+    {
+      "id": "0c86439a-a565-414c-9559-540cefd4a981",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "gameType": "memory",
+      "difficulty": 1,
+      "isCorrect": false,
+      "duration": 37,
+      "timestamp": "2026-06-23T18:31:49.833Z",
+      "starsEarned": 2
+    }
+  ]
+}
