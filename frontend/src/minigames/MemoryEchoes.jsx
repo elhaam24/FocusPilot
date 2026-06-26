@@ -8,6 +8,7 @@ export default function MemoryEchoes({ puzzle, onComplete, onCancel }) {
   const [userSequence, setUserSequence] = useState([]);
   const [statusText, setStatusText] = useState('Watch the constellation light up slowly...');
   const [shuffledItems, setShuffledItems] = useState([]);
+  const [prematureClicks, setPrematureClicks] = useState(0);
 
   // Shuffle items for the click grid so they aren't in the correct order,
   // forcing the player to search and focus on the labels rather than just physical positions!
@@ -44,7 +45,11 @@ export default function MemoryEchoes({ puzzle, onComplete, onCancel }) {
   };
 
   const handleItemClick = (itemName) => {
-    if (isPlayingSequence) return; // Prevent clicks during sequence play
+    if (isPlayingSequence) {
+      // Count attempted clicks while sequence is playing as premature clicks
+      setPrematureClicks(prev => prev + 1);
+      return;
+    }
 
     const nextSeq = [...userSequence, itemName];
     setUserSequence(nextSeq);
@@ -54,7 +59,7 @@ export default function MemoryEchoes({ puzzle, onComplete, onCancel }) {
     if (nextSeq.length === items.length) {
       setStatusText('Analyzing your transmission...');
       setTimeout(() => {
-        onComplete(nextSeq);
+        onComplete({ answers: nextSeq, metrics: { prematureClicks } });
       }, 800);
     }
   };
@@ -132,7 +137,7 @@ export default function MemoryEchoes({ puzzle, onComplete, onCancel }) {
           display: 'grid', 
           gridTemplateColumns: 'repeat(3, 1fr)', 
           gap: '12px',
-          pointerEvents: isPlayingSequence ? 'none' : 'auto',
+          pointerEvents: 'auto',
           opacity: isPlayingSequence ? 0.6 : 1,
           transition: 'opacity 0.3s'
         }}>
@@ -142,7 +147,7 @@ export default function MemoryEchoes({ puzzle, onComplete, onCancel }) {
               <button
                 key={item.name}
                 onClick={() => handleItemClick(item.name)}
-                disabled={isPlayingSequence || hasBeenClicked}
+                disabled={hasBeenClicked}
                 className="btn-flat"
                 style={{
                   padding: '16px',

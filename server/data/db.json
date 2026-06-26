@@ -9,7 +9,7 @@
       ],
       "avatar": "koala",
       "currentWorld": "Cosmic Canopy",
-      "stars": 44,
+      "stars": 91,
       "skillLevels": {
         "memory": 1,
         "patterns": 1,
@@ -17,7 +17,103 @@
         "observation": 1,
         "comprehension": 1
       },
-      "createdAt": "2026-06-23T17:44:19.811Z"
+      "createdAt": "2026-06-23T17:44:19.811Z",
+      "missions": [
+        {
+          "id": "m_1782427300247_0",
+          "title": "More reading-based comprehension quests",
+          "description": "Auto-generated mission: More reading-based comprehension quests",
+          "targetSkill": "mixed",
+          "rewardStars": 5
+        },
+        {
+          "id": "m_1782427300247_1",
+          "title": "Shorter sequence memory drills",
+          "description": "Auto-generated mission: Shorter sequence memory drills",
+          "targetSkill": "mixed",
+          "rewardStars": 6
+        },
+        {
+          "id": "m_1782427339224_0",
+          "title": "More reading-based comprehension quests",
+          "description": "Auto-generated mission: More reading-based comprehension quests",
+          "targetSkill": "mixed",
+          "rewardStars": 5
+        },
+        {
+          "id": "m_1782427339224_1",
+          "title": "Shorter sequence memory drills",
+          "description": "Auto-generated mission: Shorter sequence memory drills",
+          "targetSkill": "mixed",
+          "rewardStars": 6
+        }
+      ]
+    },
+    "05708506-81ae-4e15-9f7f-0eb62eeab932": {
+      "id": "05708506-81ae-4e15-9f7f-0eb62eeab932",
+      "name": "kad",
+      "age": 14,
+      "interests": [
+        "science"
+      ],
+      "avatar": "koala",
+      "currentWorld": "Cosmic Canopy",
+      "stars": 10,
+      "skillLevels": {
+        "memory": 1,
+        "patterns": 1,
+        "patience": 1,
+        "observation": 1,
+        "comprehension": 1
+      },
+      "createdAt": "2026-06-23T18:49:38.196Z",
+      "missions": [
+        {
+          "id": "m_1782427473422_0",
+          "title": "Shorter sequence memory drills",
+          "description": "Auto-generated mission: Shorter sequence memory drills",
+          "targetSkill": "mixed",
+          "rewardStars": 5
+        }
+      ]
+    },
+    "7ea49c85-2288-414d-b4f9-69b789a8f6f5": {
+      "id": "7ea49c85-2288-414d-b4f9-69b789a8f6f5",
+      "name": "meme",
+      "age": 8,
+      "interests": [
+        "dinosaurs"
+      ],
+      "avatar": "dragon",
+      "currentWorld": "Cosmic Canopy",
+      "stars": 0,
+      "skillLevels": {
+        "memory": 1,
+        "patterns": 1,
+        "patience": 1,
+        "observation": 1,
+        "comprehension": 1
+      },
+      "createdAt": "2026-06-26T07:49:15.315Z"
+    },
+    "f39d716c-0f95-47a5-aba3-be07ca9c2cce": {
+      "id": "f39d716c-0f95-47a5-aba3-be07ca9c2cce",
+      "name": "nana",
+      "age": 7,
+      "interests": [
+        "dinosaurs"
+      ],
+      "avatar": "dino",
+      "currentWorld": "Cosmic Canopy",
+      "stars": 15,
+      "skillLevels": {
+        "memory": 1,
+        "patterns": 1,
+        "patience": 1,
+        "observation": 1,
+        "comprehension": 1
+      },
+      "createdAt": "2026-06-26T08:39:44.873Z"
     }
   },
   "sessions": [
@@ -84,6 +180,221 @@
       "endTime": "2026-06-23T18:31:50.172Z",
       "duration": 37,
       "active": false
+    },
+    {
+      "id": "fca1c60d-1a0b-454b-8a54-8dca548d9ab7",
+      "profileId": "05708506-81ae-4e15-9f7f-0eb62eeab932",
+      "startTime": "2026-06-23T18:49:49.639Z",
+      "endTime": null,
+      "duration": 0,
+      "active": true
+    },
+    {
+      "id": "bf81bc08-d495-4c07-ad39-0597a1e7c589",
+      "profileId": "05708506-81ae-4e15-9f7f-0eb62eeab932",
+      "startTime": "2026-06-23T18:50:11.455Z",
+      "endTime": "2026-06-23T18:52:29.603Z",
+      "duration": 128,
+      "active": false
+    },
+    {
+      "id": "c074d7ea-7fa9-41ac-b44e-3125403bc468",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "startTime": "2026-06-23T20:04:10.168Z",
+      "endTime": "2026-06-23T20:05:02.928Z",
+      "duration": 51,
+      "active": false
+    },
+    {
+      "id": "d31afed4-df7b-454f-bb67-95a996076659",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "startTime": "2026-06-23T20:05:07.670Z",
+      "endTime": "2026-06-23T20:05:51.185Z",
+      "duration": 36,
+      "active": false
+    },
+    {
+      "id": "c46d623b-b725-4d0e-a759-76ec88976161",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "startTime": "2026-06-23T20:06:00.204Z",
+      "endTime": "2026-06-23T20:06:47.850Z",
+      "duration": 28,
+      "active": false
+    },
+    {
+      "id": "2b8feb30-af48-46bb-8bdc-9782831fe9d2",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "startTime": "2026-06-23T20:08:51.746Z",
+      "endTime": null,
+      "duration": 0,
+      "active": true
+    },
+    {
+      "id": "142b97c5-0dac-4de5-b23c-6984f1593e00",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "startTime": "2026-06-23T20:09:50.927Z",
+      "endTime": "2026-06-23T20:10:37.072Z",
+      "duration": 38,
+      "active": false
+    },
+    {
+      "id": "1c6412f3-77f3-4ce5-9876-0e65fce1a26e",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "startTime": "2026-06-23T20:10:44.663Z",
+      "endTime": "2026-06-23T20:11:42.938Z",
+      "duration": 51,
+      "active": false
+    },
+    {
+      "id": "5236ce0d-4b25-4d7e-bfad-326cb572df58",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "startTime": "2026-06-23T20:11:50.464Z",
+      "endTime": "2026-06-23T20:12:09.970Z",
+      "duration": 13,
+      "active": false
+    },
+    {
+      "id": "faebfd79-00ba-488c-b3cd-a13ea7521e99",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "startTime": "2026-06-23T20:12:53.193Z",
+      "endTime": "2026-06-23T20:13:13.180Z",
+      "duration": 14,
+      "active": false
+    },
+    {
+      "id": "56c5dab8-47d4-4f66-87b0-f825a6e0e29c",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "startTime": "2026-06-23T20:13:22.719Z",
+      "endTime": null,
+      "duration": 0,
+      "active": true
+    },
+    {
+      "id": "c4eae270-c668-4509-9986-6983a41e9fe2",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "startTime": "2026-06-25T17:42:39.947Z",
+      "endTime": null,
+      "duration": 0,
+      "active": true
+    },
+    {
+      "id": "77fb7e53-6162-4d17-93d9-907ad5e02d45",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "startTime": "2026-06-25T17:45:46.048Z",
+      "endTime": null,
+      "duration": 0,
+      "active": true
+    },
+    {
+      "id": "91138a7c-e8eb-4fa6-94a4-ef81d5a5b1c2",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "startTime": "2026-06-25T17:45:46.173Z",
+      "endTime": null,
+      "duration": 0,
+      "active": true
+    },
+    {
+      "id": "f3ef9a16-2d07-44e3-81d7-0e9fba48d229",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "startTime": "2026-06-25T22:40:45.575Z",
+      "endTime": "2026-06-25T22:41:40.670Z",
+      "duration": 50,
+      "active": false,
+      "analysis": {
+        "strengths": [],
+        "weaknesses": [
+          "Reading completion",
+          "Memory recall",
+          "Patience"
+        ],
+        "focusPatterns": [
+          {
+            "type": "timeOfDay",
+            "note": "Sessions clustered in the afternoon"
+          }
+        ],
+        "impulsiveSigns": [],
+        "readingEndurance": 0,
+        "memoryPerformance": 0,
+        "recommendedGoals": [
+          "More reading-based comprehension quests",
+          "Shorter sequence memory drills"
+        ]
+      }
+    },
+    {
+      "id": "ba116736-d446-4b72-a6e1-3d6fdc204d74",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "startTime": "2026-06-25T22:41:47.822Z",
+      "endTime": "2026-06-25T22:42:20.267Z",
+      "duration": 27,
+      "active": false,
+      "analysis": {
+        "strengths": [],
+        "weaknesses": [
+          "Reading completion",
+          "Memory recall",
+          "Patience"
+        ],
+        "focusPatterns": [
+          {
+            "type": "timeOfDay",
+            "note": "Sessions clustered in the afternoon"
+          }
+        ],
+        "impulsiveSigns": [],
+        "readingEndurance": 0,
+        "memoryPerformance": 0,
+        "recommendedGoals": [
+          "More reading-based comprehension quests",
+          "Shorter sequence memory drills"
+        ]
+      }
+    },
+    {
+      "id": "f3ba026e-ea59-401e-aaa3-93d45db406e9",
+      "profileId": "05708506-81ae-4e15-9f7f-0eb62eeab932",
+      "startTime": "2026-06-25T22:43:59.798Z",
+      "endTime": "2026-06-25T22:44:34.168Z",
+      "duration": 30,
+      "active": false,
+      "analysis": {
+        "strengths": [
+          "Reading endurance"
+        ],
+        "weaknesses": [
+          "Memory recall",
+          "Patience"
+        ],
+        "focusPatterns": [
+          {
+            "type": "timeOfDay",
+            "note": "Sessions clustered in the afternoon"
+          }
+        ],
+        "impulsiveSigns": [],
+        "readingEndurance": 100,
+        "memoryPerformance": 0,
+        "recommendedGoals": [
+          "Shorter sequence memory drills"
+        ]
+      }
+    },
+    {
+      "id": "fc7a45c0-020c-49a9-b8f2-b87b0c739122",
+      "profileId": "f39d716c-0f95-47a5-aba3-be07ca9c2cce",
+      "startTime": "2026-06-26T08:41:02.688Z",
+      "endTime": "2026-06-26T08:42:38.081Z",
+      "duration": 82,
+      "active": false
+    },
+    {
+      "id": "ef8e22aa-bd4a-42fc-a4a4-493d4691efb8",
+      "profileId": "f39d716c-0f95-47a5-aba3-be07ca9c2cce",
+      "startTime": "2026-06-26T08:44:16.358Z",
+      "endTime": null,
+      "duration": 0,
+      "active": true
     }
   ],
   "gamelogs": [
@@ -136,6 +447,126 @@
       "duration": 37,
       "timestamp": "2026-06-23T18:31:49.833Z",
       "starsEarned": 2
+    },
+    {
+      "id": "53a98cfd-8c90-4737-b5b6-fddaaf047e7d",
+      "profileId": "05708506-81ae-4e15-9f7f-0eb62eeab932",
+      "gameType": "comprehension",
+      "difficulty": 1,
+      "isCorrect": false,
+      "duration": 128,
+      "timestamp": "2026-06-23T18:52:29.470Z",
+      "starsEarned": 5
+    },
+    {
+      "id": "92a66c34-69dd-48c9-88d9-7930b95ee07e",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "gameType": "comprehension",
+      "difficulty": 1,
+      "isCorrect": true,
+      "duration": 28,
+      "timestamp": "2026-06-23T20:06:47.553Z",
+      "starsEarned": 15
+    },
+    {
+      "id": "9fa01661-b05c-452a-9631-3990628ac945",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "gameType": "memory",
+      "difficulty": 1,
+      "isCorrect": false,
+      "duration": 29,
+      "timestamp": "2026-06-23T20:09:42.379Z",
+      "starsEarned": 2
+    },
+    {
+      "id": "88cf3b67-e42b-4ed1-94d9-2b3ab3f05da2",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "gameType": "memory",
+      "difficulty": 1,
+      "isCorrect": false,
+      "duration": 38,
+      "timestamp": "2026-06-23T20:10:36.660Z",
+      "starsEarned": 2
+    },
+    {
+      "id": "b6cbef26-eb3e-4b95-9827-f16d72faccff",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "gameType": "patterns",
+      "difficulty": 1,
+      "isCorrect": false,
+      "duration": 51,
+      "timestamp": "2026-06-23T20:11:42.584Z",
+      "starsEarned": 2
+    },
+    {
+      "id": "a8b1a3a0-dcab-42fc-a268-a654561987d0",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "gameType": "observation",
+      "difficulty": 1,
+      "isCorrect": false,
+      "duration": 13,
+      "timestamp": "2026-06-23T20:12:09.728Z",
+      "starsEarned": 5
+    },
+    {
+      "id": "218fdc38-c361-49f8-be51-ca88baed9f64",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "gameType": "memory",
+      "difficulty": 1,
+      "isCorrect": false,
+      "duration": 14,
+      "timestamp": "2026-06-23T20:13:12.997Z",
+      "starsEarned": 2
+    },
+    {
+      "id": "6d794cd0-8615-4ceb-8b5e-3bb2f0f079f7",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "gameType": "comprehension",
+      "difficulty": 1,
+      "isCorrect": true,
+      "duration": 41,
+      "timestamp": "2026-06-25T17:43:30.005Z",
+      "starsEarned": 15
+    },
+    {
+      "id": "1eb767d2-a98f-4635-9890-17e46ee0bea3",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "gameType": "memory",
+      "difficulty": 1,
+      "isCorrect": false,
+      "duration": 50,
+      "timestamp": "2026-06-25T22:41:38.714Z",
+      "starsEarned": 2
+    },
+    {
+      "id": "f1396311-753b-412f-a535-e645defbe146",
+      "profileId": "44211a43-ee82-4e1e-b8d8-90c77c9e28dc",
+      "gameType": "patterns",
+      "difficulty": 1,
+      "isCorrect": false,
+      "duration": 27,
+      "timestamp": "2026-06-25T22:42:17.490Z",
+      "starsEarned": 2
+    },
+    {
+      "id": "8482f1c8-60e7-4638-9fe9-83f81d036a22",
+      "profileId": "05708506-81ae-4e15-9f7f-0eb62eeab932",
+      "gameType": "observation",
+      "difficulty": 1,
+      "isCorrect": false,
+      "duration": 30,
+      "timestamp": "2026-06-25T22:44:31.842Z",
+      "starsEarned": 5
+    },
+    {
+      "id": "2fde26ca-043d-4d35-b8c5-8b41155fda5e",
+      "profileId": "f39d716c-0f95-47a5-aba3-be07ca9c2cce",
+      "gameType": "comprehension",
+      "difficulty": 1,
+      "isCorrect": true,
+      "duration": 82,
+      "timestamp": "2026-06-26T08:42:36.566Z",
+      "starsEarned": 15
     }
   ]
 }

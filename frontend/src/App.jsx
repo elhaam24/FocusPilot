@@ -5,6 +5,7 @@ import ProfileSetup from './pages/ProfileSetup';
 import GameMap from './pages/GameMap';
 import GamePlay from './pages/GamePlay';
 import ParentDashboard from './pages/ParentDashboard';
+import AIInsights from './pages/AIInsights';
 
 export default function App() {
   const [activeProfile, setActiveProfile] = useState(null);
@@ -118,6 +119,10 @@ export default function App() {
           <ParentDashboard 
             activeProfile={activeProfile} 
           />
+        )}
+
+        {activePage === 'ai-insights' && activeProfile && (
+          <AIInsights activeProfile={activeProfile} />
         )}
       </main>
 

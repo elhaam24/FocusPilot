@@ -8,6 +8,7 @@ export default function NovaChronicles({ puzzle, onComplete, onCancel }) {
   const [secondsLeft, setSecondsLeft] = useState(minReadingTime);
   const [showQuestions, setShowQuestions] = useState(false);
   const [selectedAnswers, setSelectedAnswers] = useState(Array(questions.length).fill(null));
+  const [readingStart] = useState(Date.now());
 
   // Countdown timer to unlock questions
   useEffect(() => {
@@ -38,7 +39,8 @@ export default function NovaChronicles({ puzzle, onComplete, onCancel }) {
 
   const handleSubmit = () => {
     if (!isAllAnswered) return;
-    onComplete(selectedAnswers);
+    const readingTimeSec = Math.round((Date.now() - readingStart) / 1000);
+    onComplete({ answers: selectedAnswers, metrics: { readingTimeSec, minReadingTime } });
   };
 
   return (

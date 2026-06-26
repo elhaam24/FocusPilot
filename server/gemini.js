@@ -82,7 +82,7 @@ async function generatePuzzle(gameType, age, skillLevel, interests = []) {
 /**
  * Get Nova the AI Mentor's supportive feedback.
  */
-async function getNovaFeedback(gameType, questionContext, answer, isCorrect, age) {
+async function getNovaFeedback(gameType, questionContext, answer, isCorrect, age, puzzleTitle) {
   if (isMockMode) {
     return getMockNovaFeedback(gameType, isCorrect, age);
   }
@@ -376,21 +376,73 @@ function getMockPuzzle(gameType, age, skillLevel, theme) {
   };
 }
 
-function getMockNovaFeedback(gameType, isCorrect, age) {
+function getMockNovaFeedback(gameType, isCorrect, age, questionContext) {
+  const gameTypeNormalized = (gameType || '').toLowerCase();
+  
   if (isCorrect) {
-    const celebrations = [
-      'Wow, outstanding focus! You read carefully and found the right answer. Your focus muscles are growing stronger!',
-      'Magnificent! Your patience really paid off. You took your time and nailed it!',
-      'Superb job! Nova is so proud of your concentration. That shows how powerful a focused mind can be!'
-    ];
-    return celebrations[Math.floor(Math.random() * celebrations.length)];
+    // Smart context-aware success feedback based on game type
+    const successResponses = {
+      comprehension: [
+        `Amazing! You read so carefully and caught every detail. That's the power of patient, focused reading! 📖✨`,
+        `Brilliant! Your attention to the story was incredible. You showed true focus power!`,
+        `Perfect score! You paid such close attention to the whole story. Your brain is getting stronger!`
+      ],
+      patterns: [
+        `Wow! You traced the path flawlessly! That required real focus and planning. You're a puzzle master! 🎯`,
+        `Incredible! You solved the pattern with laser-sharp focus. That was strategic thinking at its best!`,
+        `Fantastic! You navigated every coordinate perfectly. Your concentration is unstoppable!`
+      ],
+      memory: [
+        `Outstanding! You remembered the entire sequence perfectly! Your memory is like a fortress! 🧠💫`,
+        `Wow! Your recall was flawless. You focused and locked that sequence into your brain beautifully!`,
+        `Perfect recall! That shows incredible focus and mental strength!`
+      ],
+      observation: [
+        `Excellent eye! You caught all the details and observed so carefully. Your focus power is real! 👁️✨`,
+        `Amazing observation skills! You noticed everything. That's true focus at work!`,
+        `Perfect observation! You spotted every detail. Your concentration was laser-focused!`
+      ],
+      patience: [
+        `Beautiful! You stayed calm and focused for the whole breathing session. That's true peace! 🧘‍♂️✨`,
+        `Perfect! You breathed with such patience and focus. Your mind is getting stronger!`,
+        `Wonderful! You maintained focus throughout. Your inner calm power is growing!`
+      ]
+    };
+    
+    const responses = successResponses[gameTypeNormalized] || successResponses.comprehension;
+    return responses[Math.floor(Math.random() * responses.length)];
   } else {
-    const encouragements = [
-      'That was a wonderful attempt! Puzzles can be tricky, but taking a deep breath and reading it one more time will help us see the clue. Let\'s try again together!',
-      'So close! Remember, every time we tackle a tough challenge and make a mistake, our brain builds new pathways. Take your time, there is absolutely no rush!',
-      'Great try! Let\'s slow down, look closely at the clues Nova gave, and try it again. You have got this!'
-    ];
-    return encouragements[Math.floor(Math.random() * encouragements.length)];
+    // Smart context-aware struggle feedback based on game type
+    const encouragingResponses = {
+      comprehension: [
+        `Good try! Sometimes stories have tricky details. Read it one more time slowly—you'll spot what you missed. That's how our brains learn! 💡`,
+        `So close! Take a breath and look at the story again carefully. Every attempt makes your focus sharper!`,
+        `Great effort! This one was tricky, but you're close. Let's slow down and read it again together.`
+      ],
+      patterns: [
+        `Nice effort! Pattern puzzles need strategic planning. Think about the coordinates like a treasure map and plan your whole path before clicking! 🗺️`,
+        `Good try! Let's trace this path more carefully. Remember, planning each step first helps our focus!`,
+        `You got it! The path just needs a bit more careful planning. That's how we build focus!`
+      ],
+      memory: [
+        `Good effort! Memory tasks get stronger with practice. Try saying each item out loud as it appears—that helps your brain lock it in! 🎯`,
+        `Close! Memory takes time to build. Your brain is learning how to focus and recall better!`,
+        `Great try! Next time, focus on each item as it appears. Your memory is getting stronger!`
+      ],
+      observation: [
+        `Good observation! You caught some details, but there were a few more to find. Read the scene description twice next time—slow scanning finds everything! 🔍`,
+        `Nice try! Observation takes patience. Read it carefully one more time and look for colors, numbers, and small details!`,
+        `Good effort! You're close. Take a deep breath and scan the description again slowly. You've got this!`
+      ],
+      patience: [
+        `Good effort! Patience is like a muscle—it gets stronger with practice. Next time, try staying focused the whole way through! 🌟`,
+        `Great try! Your focus is building. Keep practicing staying calm and centered!`,
+        `You're doing well! Keep practicing patience and focus. Every session makes you stronger!`
+      ]
+    };
+    
+    const responses = encouragingResponses[gameTypeNormalized] || encouragingResponses.comprehension;
+    return responses[Math.floor(Math.random() * responses.length)];
   }
 }
 

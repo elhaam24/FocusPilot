@@ -203,3 +203,21 @@ router.get('/stats/:profileId', async (req, res) => {
 });
 
 module.exports = router;
+
+// POST generate weekly report (explicit endpoint)
+router.get('/weekly/:profileId', async (req, res) => {
+  try {
+    const { profileId } = req.params;
+    const profile = await db.getProfile(profileId);
+    if (!profile) return res.status(404).json({ error: 'Profile not found' });
+
+    const gamelogs = await db.getGameLogs(profileId);
+    const history = gamelogs.slice(-50).map(g => ({ gameType: g.gameType, isCorrect: g.isCorrect, duration: g.duration, timestamp: g.timestamp }));
+
+    const report = await require('../gemini').getParentReport({ name: profile.name, age: profile.age, interests: profile.interests, skillLevels: profile.skillLevels }, history);
+    res.json({ report });
+  } catch (error) {
+    console.error('Error generating weekly report:', error);
+    res.status(500).json({ error: 'Failed to generate weekly report' });
+  }
+});

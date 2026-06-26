@@ -93,11 +93,22 @@ export default function GamePlay({ activeProfile, gameType, worldName, onBackToM
   };
 
   // 2. Handle mini-game completion
-  const handleGameComplete = async (answers) => {
+  const handleGameComplete = async (result) => {
     if (isEvaluating) return;
     setIsEvaluating(true);
 
     const elapsedSeconds = Math.round((Date.now() - startTime) / 1000);
+
+    // Normalize result -> { answers: [...], metrics: { ... } }
+    let answers = null;
+    let componentMetrics = {};
+    if (Array.isArray(result)) answers = result;
+    else if (result && typeof result === 'object') {
+      answers = result.answers || null;
+      componentMetrics = result.metrics || {};
+    } else {
+      answers = result;
+    }
 
     try {
       // Submit answers to server for evaluation
@@ -112,24 +123,103 @@ export default function GamePlay({ activeProfile, gameType, worldName, onBackToM
       });
 
       const data = await response.json();
-      
-      if (response.ok) {
-        setEvaluationResult(data);
-        setIsEvaluated(true);
-        
-        // Save focus tracking duration
-        await endTrackingSession(true, elapsedSeconds);
-        
-        // Trigger profile refresh in parent to update stars/levels
-        if (data.updatedProfile) {
-          refreshProfile(data.updatedProfile);
+      if (!response.ok) throw new Error(data.error || 'Failed to evaluate answers');
+
+      // Build session metrics payload
+      const metricsPayload = {
+        totalFocusTime: elapsedSeconds,
+        sessionDuration: elapsedSeconds,
+        readingCompletionRate: 0,
+        readingComprehensionAccuracy: 0,
+        memoryGameAccuracy: 0,
+        observationAccuracy: 0,
+        patienceScore: 0,
+        breathExerciseConsistency: 0,
+        prematureClicks: componentMetrics.prematureClicks || 0,
+        skippedInstructions: componentMetrics.skippedInstructions || 0,
+        focusStreaks: { current: 0, longest: 0 },
+        difficultyProgression: {}
+      };
+
+      // Parse evaluationDetail for comprehension/observation accuracy
+      if (data.evaluationDetail && /Answered\s+(\d+)\/(\d+)/i.test(data.evaluationDetail)) {
+        const m = data.evaluationDetail.match(/Answered\s+(\d+)\/(\d+)/i);
+        const correct = parseInt(m[1], 10);
+        const total = parseInt(m[2], 10);
+        metricsPayload.readingComprehensionAccuracy = Math.round((correct / total) * 100);
+        metricsPayload.readingCompletionRate = componentMetrics.minReadingTime ? Math.min(100, Math.round((componentMetrics.readingTimeSec || 0) / componentMetrics.minReadingTime * 100)) : 100;
+      }
+
+      // Memory game accuracy
+      if (gameType === 'memory') {
+        metricsPayload.memoryGameAccuracy = data.isCorrect ? 100 : 0;
+      }
+
+      // Observation accuracy
+      if (gameType === 'observation') {
+        // Use same parsing as comprehension
+        if (data.evaluationDetail && /Answered\s+(\d+)\/(\d+)/i.test(data.evaluationDetail)) {
+          const m = data.evaluationDetail.match(/Answered\s+(\d+)\/(\d+)/i);
+          metricsPayload.observationAccuracy = Math.round((parseInt(m[1],10)/parseInt(m[2],10))*100);
+        } else {
+          metricsPayload.observationAccuracy = data.isCorrect ? 100 : 0;
         }
-      } else {
-        alert(data.error || 'Failed to evaluate answers');
+      }
+
+      // Patience / breathing metrics
+      if (gameType === 'patience') {
+        metricsPayload.patienceScore = componentMetrics.breathConsistency || 0;
+        metricsPayload.breathExerciseConsistency = componentMetrics.totalHoldMs || 0;
+      }
+
+      // Fetch parent stats to get streaks
+      try {
+        const statResp = await fetch(`/api/parent/stats/${activeProfile.id}`);
+        if (statResp.ok) {
+          const statData = await statResp.json();
+          metricsPayload.focusStreaks = { current: statData.summary.currentStreak || 0, longest: statData.summary.longestStreak || 0 };
+        }
+      } catch (e) {
+        // ignore
+      }
+
+      // Difficulty progression (compare old vs updated profile levels)
+      if (data.updatedProfile && activeProfile.skillLevels) {
+        const diffs = {};
+        Object.keys(activeProfile.skillLevels).forEach(k => {
+          const before = activeProfile.skillLevels[k] || 1;
+          const after = data.updatedProfile.skillLevels ? data.updatedProfile.skillLevels[k] || before : before;
+          if (after !== before) diffs[k] = { before, after };
+        });
+        metricsPayload.difficultyProgression = diffs;
+      }
+
+      // Merge component-reported metrics
+      Object.assign(metricsPayload, componentMetrics);
+
+      // Persist session summary and trigger Gemini analysis on server
+      if (sessionId) {
+        await fetch('/api/sessions/summary', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ sessionId, profileId: activeProfile.id, metrics: metricsPayload })
+        });
+      }
+
+      // Update UI with evaluation result
+      setEvaluationResult(data);
+      setIsEvaluated(true);
+
+      // Save focus tracking duration
+      await endTrackingSession(true, elapsedSeconds);
+
+      // Trigger profile refresh in parent to update stars/levels
+      if (data.updatedProfile) {
+        refreshProfile(data.updatedProfile);
       }
     } catch (err) {
       console.error('Error submitting game answers:', err);
-      alert('Network error while evaluating your answers');
+      alert(err.message || 'Network error while evaluating your answers');
     } finally {
       setIsEvaluating(false);
     }
@@ -249,7 +339,7 @@ export default function GamePlay({ activeProfile, gameType, worldName, onBackToM
       {gameType === 'patience' && (
         <FocusBeacon 
           puzzle={puzzle} 
-          onComplete={(success, detail) => handleGameComplete(true)} 
+          onComplete={(res) => handleGameComplete(res)} 
           onCancel={handleAbort} 
         />
       )}
@@ -257,7 +347,7 @@ export default function GamePlay({ activeProfile, gameType, worldName, onBackToM
       {gameType === 'memory' && (
         <MemoryEchoes 
           puzzle={puzzle} 
-          onComplete={(answers) => handleGameComplete(answers)} 
+          onComplete={(res) => handleGameComplete(res)} 
           onCancel={handleAbort} 
         />
       )}
@@ -281,7 +371,7 @@ export default function GamePlay({ activeProfile, gameType, worldName, onBackToM
       {gameType === 'comprehension' && (
         <NovaChronicles 
           puzzle={puzzle} 
-          onComplete={(answers) => handleGameComplete(answers)} 
+          onComplete={(res) => handleGameComplete(res)} 
           onCancel={handleAbort} 
         />
       )}

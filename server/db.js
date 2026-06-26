@@ -153,6 +153,17 @@ module.exports = {
     return null;
   },
 
+  async addSessionAnalysis(sessionId, analysis) {
+    const db = await readDb();
+    const sessionIndex = db.sessions.findIndex(s => s.id === sessionId);
+    if (sessionIndex !== -1) {
+      db.sessions[sessionIndex].analysis = analysis;
+      await writeDb(db);
+      return db.sessions[sessionIndex];
+    }
+    return null;
+  },
+
   async getSessions(profileId) {
     const db = await readDb();
     return db.sessions.filter(s => s.profileId === profileId);
@@ -206,5 +217,16 @@ module.exports = {
   async getGameLogs(profileId) {
     const db = await readDb();
     return db.gamelogs.filter(g => g.profileId === profileId);
+  }
+
+  ,
+  async saveProfileMissions(profileId, missions) {
+    const db = await readDb();
+    if (!db.profiles[profileId]) return null;
+    db.profiles[profileId].missions = db.profiles[profileId].missions || [];
+    // Append new missions
+    db.profiles[profileId].missions = db.profiles[profileId].missions.concat(missions);
+    await writeDb(db);
+    return db.profiles[profileId];
   }
 };

@@ -143,7 +143,8 @@ router.post('/submit', async (req, res) => {
       { title: puzzle.title, questions: puzzle.questions, detail: evaluationDetail },
       answers,
       isCorrect,
-      profile.age
+      profile.age,
+      puzzle.title
     );
 
     // Save game log to DB (which handles Dynamic Difficulty adjustment automatically!)
@@ -172,6 +173,88 @@ router.post('/submit', async (req, res) => {
   }
 });
 
+// Helper to generate dynamic, context-aware offline/mock mentor responses
+function generateMockMentorReply(name, message, taskTitle) {
+  const msg = message.toLowerCase();
+  const task = (taskTitle || '').toLowerCase();
+
+  // 1. Greetings
+  if (msg.includes('hello') || msg.includes('hi') || msg.startsWith('hey')) {
+    return `Hi, explorer ${name}! 🌟 I am Nova, your focus companion. I'm so excited to help you train your attention muscles today! What can I help you with?`;
+  }
+
+  // 2. Expressions of thanks
+  if (msg.includes('thank') || msg.includes('thanks')) {
+    return `You're very welcome, ${name}! Remember, every challenge we attempt makes our focus power stronger. Keep up the amazing work! 🚀`;
+  }
+
+  // 3. Requests for hints or help
+  if (msg.includes('hint') || msg.includes('help') || msg.includes('stuck') || msg.includes('clue') || msg.includes('how to')) {
+    if (task.includes('memory')) {
+      return `Here's a stellar hint for Constellation Recall: Try saying the names of the stars out loud as they light up! This verbal trick helps your brain lock the sequence in your working memory.`;
+    }
+    if (task.includes('pattern')) {
+      return `For the Rune Weaver path: Look at the coordinates like a treasure map! Remember, the first number (X) is how many steps to the right, and the second (Y) is how many steps down. Plan your whole route before clicking!`;
+    }
+    if (task.includes('breath') || task.includes('patience') || task.includes('beacon')) {
+      return `For the Breath Beacon: This is all about patience, ${name}. Breathe in slowly as the beacon grows, and breathe out as it shrinks. Keep your focus on the rhythm, and don't rush!`;
+    }
+    if (task.includes('observation') || task.includes('scan') || task.includes('anomalies')) {
+      return `For the Abyss Scan: Take a deep breath and read the description twice. Pay close attention to colors, numbers, and details like what characters are holding. Slow scanning finds the treasures!`;
+    }
+    if (task.includes('reading') || task.includes('comprehension') || task.includes('chronicles')) {
+      return `For the Chronicles of Nova: Enjoy the story like a fun book! Don't rush to get to the questions. Try to paint a picture of the adventure in your mind as you read.`;
+    }
+    return `To solve this focus mission, my best advice is to slow down, take a deep breath, and read the instructions carefully. Your concentration is your superpower, ${name}!`;
+  }
+
+  // 4. Confusion or "I don't know" patterns
+  if (msg.includes("don't know") || msg.includes("dunno") || msg.includes('confused') || msg.includes('lost')) {
+    return `No worries, ${name}! That's completely normal. 🌟 Let's break it down together step by step. What part is confusing you the most? We'll solve it with patience and focus!`;
+  }
+
+  // 5. Questions about difficulty or being too hard
+  if (msg.includes('too hard') || msg.includes('difficult') || msg.includes('impossible') || msg.includes('can\'t do')) {
+    return `I believe in you, ${name}! 💪 Every challenge starts hard, but your focus grows stronger with each try. Want to approach it differently? Sometimes slowing down reveals all the clues!`;
+  }
+
+  // 6. Questions about instructions
+  if (msg.includes('what') && (msg.includes('do') || msg.includes('task') || msg.includes('supposed'))) {
+    if (task) {
+      return `Great question! For "${taskTitle}", the goal is to stay focused and complete it carefully. Read the instructions at the top slowly, and remember—there's no rush. What specific step needs clarification?`;
+    }
+    return `For any FocusPilot mission, the goal is always the same: slow down, concentrate, and give it your best focused effort. What would you like to know more about?`;
+  }
+
+  // 7. Praise or confidence statements
+  if (msg.includes('i can') || msg.includes('i will') || msg.includes('yes') || msg.includes('ready')) {
+    return `YES! That's the spirit, ${name}! 🚀 With that kind of focus and determination, you're going to crush this. Go show this puzzle your amazing concentration power!`;
+  }
+
+  // 8. Questions about focus or concentration
+  if (msg.includes('focus') || msg.includes('concentrate') || msg.includes('attention')) {
+    return `Focus is like a superpower, ${name}! 🧠✨ Here's the trick: breathe slowly, eliminate distractions, and tell yourself "I can do this carefully." The more you practice, the stronger your focus gets!`;
+  }
+
+  // 9. Asking for motivation or encouragement
+  if (msg.includes('can you help') || msg.includes('encourage') || msg.includes('motivate') || msg.includes('push me')) {
+    return `You've got this, ${name}! 💫 Every puzzle you attempt trains your brain to be more powerful. I believe in your focus. Take a deep breath and let's show this puzzle what you're made of!`;
+  }
+
+  // 10. Generic/random questions - now much smarter fallbacks
+  const smartFallbacks = [
+    `That's a great question, ${name}! 🤔 Let me ask you this: What do YOU think the clue is telling us? Sometimes our own focused thinking finds the answer!`,
+    `Interesting! You know what? Your curiosity shows real focus, ${name}. Let's think about this step by step. What's your best guess?`,
+    `I love how you're thinking, ${name}! 🌟 You're using your brain's power. Take a deep breath and look at the clues again slowly. What do you notice?`,
+    `Great observation, ${name}! Remember, focus is about noticing details others miss. Look closely at what you're working on. What stands out to you?`,
+    `You're asking all the right questions, ${name}! That shows real focus. Let's slow down together and examine the details. What's challenging you right now?`
+  ];
+  
+  // Choose a fallback based on message content for consistency
+  const index = Math.abs(message.length) % smartFallbacks.length;
+  return smartFallbacks[index];
+}
+
 // POST chat with Nova (AI Mentor interactive guidance)
 router.post('/mentor/chat', async (req, res) => {
   try {
@@ -194,7 +277,7 @@ router.post('/mentor/chat', async (req, res) => {
     let mentorReply = '';
 
     if (gemini.isMockMode()) {
-      mentorReply = `Hello, explorer ${profile.name}! I am Nova. For the task "${currentTaskTitle || 'your adventure'}", my best advice is to take a deep breath, read the instructions carefully, and look for patterns. What specific part can I help you think through?`;
+      mentorReply = generateMockMentorReply(profile.name, message, currentTaskTitle);
     } else {
       try {
         const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
@@ -219,7 +302,8 @@ router.post('/mentor/chat', async (req, res) => {
         mentorReply = result.response.text().trim();
       } catch (apiError) {
         console.error('Error calling live Gemini in mentor chat, falling back to mock:', apiError);
-        mentorReply = `Hello, explorer ${profile.name}! I am Nova. For the task "${currentTaskTitle || 'your adventure'}", my best advice is to take a deep breath, read the instructions carefully, and look for patterns. What specific part can I help you think through?`;
+        // Fall back to the smart procedural mock response instead of a static error
+        mentorReply = generateMockMentorReply(profile.name, message, currentTaskTitle);
       }
     }
 

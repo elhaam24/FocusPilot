@@ -8,6 +8,8 @@ export default function FocusBeacon({ puzzle, onComplete, onCancel }) {
   const [feedback, setFeedback] = useState('Press and hold the Focus Anchor below to begin.');
   
   const targetDuration = 30; // 30 seconds total focus
+  const [holdStart, setHoldStart] = useState(null);
+  const [totalHoldMs, setTotalHoldMs] = useState(0);
 
   // Timer for breathing phase visual cues
   useEffect(() => {
@@ -51,24 +53,36 @@ export default function FocusBeacon({ puzzle, onComplete, onCancel }) {
     if (focusProgress >= 100) {
       setIsHolding(false);
       setFeedback('Incredible concentration! You recharged your Focus Fuel!');
+      // finalize hold time if user was holding
+      if (holdStart) {
+        setTotalHoldMs(prev => prev + (Date.now() - holdStart));
+        setHoldStart(null);
+      }
       // Wait a moment before returning completion
       const timeout = setTimeout(() => {
-        onComplete(true, 'Completed breathing session');
+        const holdMsNow = totalHoldMs + (holdStart ? (Date.now() - holdStart) : 0);
+        const breathConsistency = Math.round((holdMsNow / (targetDuration * 1000)) * 100);
+        onComplete({ success: true, metrics: { breathConsistency, totalHoldMs: holdMsNow } });
       }, 2500);
       return () => clearTimeout(timeout);
     }
-  }, [focusProgress, onComplete]);
+  }, [focusProgress, onComplete, holdStart, totalHoldMs]);
 
   const handleMouseDown = () => {
     if (focusProgress >= 100) return;
     setIsHolding(true);
     setFeedback('Perfect. Keep holding, breathe deeply, and sync with the expanding circle.');
+    setHoldStart(Date.now());
   };
 
   const handleMouseUp = () => {
     if (focusProgress >= 100) return;
     setIsHolding(false);
     setFeedback('You released the anchor! Take a deep breath and press down again to continue.');
+    if (holdStart) {
+      setTotalHoldMs(prev => prev + (Date.now() - holdStart));
+      setHoldStart(null);
+    }
   };
 
   return (
