@@ -1,7 +1,8 @@
 # FocusPilot 🚀
 
 
-<img width="1362" height="681" alt="{6839ED17-C68D-437D-8591-C1CBBC6680EB}" src="https://github.com/user-attachments/assets/c444789d-a07e-4bc5-83d1-7f9caf6139a2" />
+<img width="1365" height="682" alt="image" src="https://github.com/user-attachments/assets/62915610-4c9d-4d72-8bc3-a8020b643c9c" />
+
 
 
 FocusPilot is a web-based educational adventure game designed for children aged 7–14 to train and improve their attention spans, working memory, patience, and logical reasoning. 
